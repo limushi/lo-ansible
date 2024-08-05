@@ -1,0 +1,23 @@
+---
+- name: Name for playbook
+  hosts: nginx
+  become: true
+
+  vars:
+    domains:
+      - test.example.net
+      - test2.example.net
+    wcsert: "/etc/pki/nginx/wildcard.crt"
+    wckey: "/etc/pki/nginx/wildcard.key"
+
+  tasks:
+  - name: Create nginx conf by template
+    template:
+      src: templates/nginx-confd.j2
+      dest: "/tmp/{{ item }}.conf"
+    loop: "{{ domains }}"
+
+  - name: Copy all serts to nginx
+    copy:
+      src: files/ssl/
+      dest: /tmp/
