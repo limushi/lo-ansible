@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name {{ item }};
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name {{ item }};
+
+    ssl_certificate {{ wcsert }};
+    ssl_certificate_key {{ wckey }};
+
+    # custom SSL
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_session_timeout 10m;
+    #ssl_ciphers HIGH:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!SRP;
+    #ssl_ciphers HIGH:!kEDH:!ADH:!MD5:@STRENGTH;
+    #ssl_prefer_server_ciphers on;
+}
