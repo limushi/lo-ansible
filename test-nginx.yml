@@ -16,6 +16,8 @@
       src: templates/nginx-confd.j2
       dest: "/tmp/{{ item }}.conf"
     loop: "{{ domains }}"
+    tags:
+      - wildcard
 
   - name: Copy all serts to nginx
     copy:
